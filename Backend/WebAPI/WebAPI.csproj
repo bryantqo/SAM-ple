@@ -1,0 +1,59 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <AssemblyVersion>1.0.0.1</AssemblyVersion>
+    <AWSProjectType>Lambda</AWSProjectType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Cognitive\**" />
+    <Compile Remove="Database Deployment\**" />
+    <Compile Remove="Middleware\**" />
+    <Compile Remove="Stitch\**" />
+    <Compile Remove="Tests\**" />
+    <Content Remove="Cognitive\**" />
+    <Content Remove="Database Deployment\**" />
+    <Content Remove="Middleware\**" />
+    <Content Remove="Stitch\**" />
+    <Content Remove="Tests\**" />
+    <EmbeddedResource Remove="Cognitive\**" />
+    <EmbeddedResource Remove="Database Deployment\**" />
+    <EmbeddedResource Remove="Middleware\**" />
+    <EmbeddedResource Remove="Stitch\**" />
+    <EmbeddedResource Remove="Tests\**" />
+    <None Remove="Cognitive\**" />
+    <None Remove="Database Deployment\**" />
+    <None Remove="Middleware\**" />
+    <None Remove="Stitch\**" />
+    <None Remove="Tests\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Amazon.AspNetCore.Identity.Cognito" Version="2.2.0" />
+    <PackageReference Include="Amazon.Extensions.CognitoAuthentication" Version="2.2.1" />
+    <PackageReference Include="Amazon.Extensions.Configuration.SystemsManager" Version="2.1.0" />
+    <PackageReference Include="Amazon.Lambda.AspNetCoreServer" Version="6.0.2" />
+    <PackageReference Include="AWSSDK.CognitoIdentityProvider" Version="3.7.0.30" />
+    <PackageReference Include="AWSSDK.SSO" Version="3.7.0.29" />
+    <PackageReference Include="AWSSDK.SSOOIDC" Version="3.7.0.29" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.6" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="5.0.6" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="5.0.6" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.1.4" />
+    <PackageReference Include="System.Linq.Async" Version="5.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Business\Business.csproj" />
+    <ProjectReference Include="..\DAL\DAL.csproj" />
+    <ProjectReference Include="..\Util\Util.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="static\index.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>

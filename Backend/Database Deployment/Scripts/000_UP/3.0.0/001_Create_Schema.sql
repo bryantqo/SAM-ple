@@ -1,0 +1,1 @@
+﻿CREATE SCHEMA pam_3_0_0;

@@ -1,0 +1,66 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <RootNamespace>com.timmons.cognitive.API</RootNamespace>
+    <Version>1.0.0</Version>
+    <AssemblyName>com.timmons.cognitive.API</AssemblyName>
+    <Configurations>Debug;Release;Local Development</Configurations>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="SQL\DynamicObjectModel\**" />
+    <Compile Remove="SQL\Layout\**" />
+    <EmbeddedResource Remove="SQL\DynamicObjectModel\**" />
+    <EmbeddedResource Remove="SQL\Layout\**" />
+    <None Remove="SQL\DynamicObjectModel\**" />
+    <None Remove="SQL\Layout\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Build Environments\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Dapper" Version="2.0.90" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Util\Util.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="SQL\DynamicObjectType\SQL.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>SQL.resx</DependentUpon>
+    </Compile>
+    <Compile Update="SQL\DynamicObject\SQL.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>SQL.resx</DependentUpon>
+    </Compile>
+    <Compile Update="SQL\User\SQL.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>SQL.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="SQL\DynamicObjectType\SQL.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>SQL.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="SQL\DynamicObject\SQL.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>SQL.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="SQL\User\SQL.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>SQL.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
+</Project>

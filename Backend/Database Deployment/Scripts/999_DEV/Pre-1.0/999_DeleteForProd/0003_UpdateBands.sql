@@ -1,0 +1,10 @@
+UPDATE pam_0_1_10.bands SET "labelConfig" = '{"text":"Urban, Agriculture, Barren, or Water","boxColor":{"r":1,"g":1,"b":1,"a":1}}' WHERE value = 0;
+UPDATE pam_0_1_10.bands SET "labelConfig" = '{"text":"Very Very Low","boxColor":{"r":150,"g":173,"b":127,"a":1}}' WHERE value = 1;
+UPDATE pam_0_1_10.bands SET "labelConfig" = '{"text":"Very Low","boxColor":{"r":186,"g":215,"b":168,"a":1}}' WHERE value = 2;
+UPDATE pam_0_1_10.bands SET "labelConfig" = '{"text":"Low","boxColor":{"r":215,"g":207,"b":158,"a":1}}' WHERE value = 3;
+UPDATE pam_0_1_10.bands SET "labelConfig" = '{"text":"Low - Moderate","boxColor":{"r":255,"g":255,"b":190,"a":1}}' WHERE value = 4;
+UPDATE pam_0_1_10.bands SET "labelConfig" = '{"text":"Moderate","boxColor":{"r":255,"g":211,"b":127,"a":1}}' WHERE value = 5;
+UPDATE pam_0_1_10.bands SET "labelConfig" = '{"text":"Moderate - High","boxColor":{"r":255,"g":170,"b":0,"a":1}}' WHERE value = 6;
+UPDATE pam_0_1_10.bands SET "labelConfig" = '{"text":"High","boxColor":{"r":255,"g":85,"b":0,"a":1}}' WHERE value = 7;
+UPDATE pam_0_1_10.bands SET "labelConfig" = '{"text":"Very High","boxColor":{"r":207,"g":0,"b":0,"a":1}}' WHERE value = 8;
+UPDATE pam_0_1_10.bands SET "labelConfig" = '{"text":"Extreme","boxColor":{"r":115,"g":0,"b":0,"a":1}}' WHERE value = 9;

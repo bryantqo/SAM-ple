@@ -1,0 +1,9 @@
+.vs/**
+*.bin
+*.obj
+obj/**
+bin/**
+**/*.user
+**/bin/
+**/obj/
+launchSettings.json

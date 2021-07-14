@@ -1,0 +1,1 @@
+CREATE SCHEMA pam_0_1_10;
