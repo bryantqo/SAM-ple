@@ -6,17 +6,6 @@ Parameters:
   DomainName:
     Type: String
     Description: Domian name for api
-  ZoneId:
-    Type: String
-    Description: Zone ID 
-    Default: none
-  CertArn:
-    Type: String
-    Description: Certificate ARN
-    Default: none
-  S3StaticHostingURL:
-    Type: String
-    Description: URL where static content is hosted from
   SecurityGroup1:
     Type: AWS::EC2::SecurityGroup::Id
     Description: Security group for API (To access rds?)
@@ -32,29 +21,11 @@ Parameters:
   SSMPath:
     Type: String
     Description: Base path in SSM the api will read config from
+  API_Repository:
+    Type: String
+    Description: URI to api image
 
 Resources:
-  CustomDomainName: # Creates the domain name
-    Type: AWS::ApiGatewayV2::DomainName
-    Properties:
-      DomainName: !Ref DomainName
-      DomainNameConfigurations: 
-        - EndpointType: REGIONAL
-          CertificateArn: !Ref CertArn
-
-  DomainRecordSet: # Creates a record set in the hosted zone for the domain
-    Type: AWS::Route53::RecordSet
-    Properties:
-      Name: !Ref DomainName
-      HostedZoneId: !Ref ZoneId
-      AliasTarget: 
-        DNSName: !GetAtt CustomDomainName.RegionalDomainName
-        HostedZoneId: !GetAtt CustomDomainName.RegionalHostedZoneId
-      Type: A
-
-
-
-
   APIMapping: # Creates the mapping for Reporting V1
     Type: AWS::ApiGatewayV2::ApiMapping
     DependsOn: API
@@ -102,12 +73,3 @@ Resources:
       Dockerfile: Dockerfile
       DockerBuildArgs:
         SAM_BUILD_MODE: run
-
-
-  StaticHostingApp:
-    Type: AWS::Serverless::Application
-    Properties:
-      Location: ./frontend.yaml
-      Parameters:
-        DomainName: !Ref CustomDomainName   
-        S3StaticHostingURL: !Ref S3StaticHostingURL

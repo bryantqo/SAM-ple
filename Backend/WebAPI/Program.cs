@@ -8,7 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using com.timmons.cognitive.API.Util;
 
-namespace API
+namespace WebAPI
 {
     public class Program
     {

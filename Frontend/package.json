@@ -1,0 +1,15 @@
+{
+  "name": "frontend",
+  "version": "1.0.0",
+  "description": "> 🌳  built with [elm-spa](https://elm-spa.dev)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "geometry-web-worker": "0.0.3",
+    "ol-themes-ext": "0.0.3"
+  }
+}

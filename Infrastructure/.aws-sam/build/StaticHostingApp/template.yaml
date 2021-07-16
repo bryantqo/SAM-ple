@@ -1,0 +1,59 @@
+AWSTemplateFormatVersion: 2010-09-09
+Transform: AWS::Serverless-2016-10-31
+Description: Static web hosting proxy from s3
+Parameters:
+  DomainName:
+    Type: String
+    Description: Domian name for api
+  S3StaticHostingURL:
+    Type: String
+    Description: URL where static content is hosted from
+Resources:
+  StaticMapping:
+    Type: AWS::ApiGatewayV2::ApiMapping
+    DependsOn: StaticApiGatewayDefaultStage
+    Properties:
+      ApiId:
+        Ref: Static
+      ApiMappingKey: ''
+      DomainName:
+        Ref: DomainName
+      Stage: $default
+  Static:
+    Type: AWS::Serverless::HttpApi
+    Properties:
+      Description:
+        Fn::Sub: ${DomainName} - Static Web
+      DefinitionBody:
+        openapi: 3.0.1
+        info:
+          title:
+            Fn::Sub: ${DomainName} Static web hosting
+        paths:
+          /:
+            get:
+              responses:
+                default:
+                  description: Default response for GET /
+              x-amazon-apigateway-integration:
+                requestParameters:
+                  overwrite:header.Accept: application/json
+                payloadFormatVersion: '1.0'
+                type: http_proxy
+                httpMethod: ANY
+                uri:
+                  Ref: S3StaticHostingURL
+                connectionType: INTERNET
+          /{proxy+}:
+            get:
+              responses:
+                default:
+                  description: Default response for GET /
+              x-amazon-apigateway-integration:
+                payloadFormatVersion: '1.0'
+                type: http_proxy
+                httpMethod: ANY
+                uri:
+                  Fn::Sub: ${S3StaticHostingURL}/{proxy}
+                connectionType: INTERNET
+        x-amazon-apigateway-importexport-version: '1.0'

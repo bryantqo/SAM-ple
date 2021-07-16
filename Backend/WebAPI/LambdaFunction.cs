@@ -10,7 +10,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
 
-namespace API
+namespace WebAPI
 {
     public class LambdaFunction : Amazon.Lambda.AspNetCoreServer.APIGatewayProxyFunction
     {

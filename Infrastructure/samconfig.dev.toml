@@ -1,0 +1,12 @@
+version = 0.1
+[default]
+[default.deploy]
+[default.deploy.parameters]
+stack_name = "sam-ple-2021-07-15"
+s3_bucket = "aws-sam-cli-managed-default-samclisourcebucket-14sgszl19fua3"
+s3_prefix = "sam-ple-2021-07-15"
+region = "us-east-1"
+confirm_changeset = true
+capabilities = "CAPABILITY_IAM CAPABILITY_AUTO_EXPAND"
+parameter_overrides = "DomainName=\"sam-ple.dev.timmons-dev.com\" ZoneId=\"Z09206032WM84SRXYUCW2\" CertArn=\"arn:aws:acm:us-east-1:178634862814:certificate/5c8475ed-2af6-4d57-bf55-4e416a754245\" S3StaticHostingURL=\"http://timmons-sam-ple-dev.s3-website-us-east-1.amazonaws.com\" SecurityGroup1=\"sg-09139c862e8703d83\" SecurityGroup2=\"sg-0f22c3f1da74aa834\" Subnet1=\"subnet-0c3c5145143c6f483\" Subnet2=\"subnet-01ce8ba87f32ebdec\" SSMPath=\"/utah/onewrap/registration/dev/\""
+image_repositories = ["APIFn=178634862814.dkr.ecr.us-east-1.amazonaws.com/timmons-sam-ple-dev"]

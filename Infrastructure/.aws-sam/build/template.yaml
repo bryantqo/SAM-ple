@@ -1,14 +1,13 @@
 AWSTemplateFormatVersion: 2010-09-09
 Transform: AWS::Serverless-2016-10-31
 Description: Multi level base path mapping
-
 Parameters:
   DomainName:
     Type: String
     Description: Domian name for api
   ZoneId:
     Type: String
-    Description: Zone ID 
+    Description: Zone ID
     Default: none
   CertArn:
     Type: String
@@ -32,82 +31,89 @@ Parameters:
   SSMPath:
     Type: String
     Description: Base path in SSM the api will read config from
-
 Resources:
-  CustomDomainName: # Creates the domain name
+  CustomDomainName:
     Type: AWS::ApiGatewayV2::DomainName
     Properties:
-      DomainName: !Ref DomainName
-      DomainNameConfigurations: 
-        - EndpointType: REGIONAL
-          CertificateArn: !Ref CertArn
-
-  DomainRecordSet: # Creates a record set in the hosted zone for the domain
+      DomainName:
+        Ref: DomainName
+      DomainNameConfigurations:
+      - EndpointType: REGIONAL
+        CertificateArn:
+          Ref: CertArn
+  DomainRecordSet:
     Type: AWS::Route53::RecordSet
     Properties:
-      Name: !Ref DomainName
-      HostedZoneId: !Ref ZoneId
-      AliasTarget: 
-        DNSName: !GetAtt CustomDomainName.RegionalDomainName
-        HostedZoneId: !GetAtt CustomDomainName.RegionalHostedZoneId
+      Name:
+        Ref: DomainName
+      HostedZoneId:
+        Ref: ZoneId
+      AliasTarget:
+        DNSName:
+          Fn::GetAtt:
+          - CustomDomainName
+          - RegionalDomainName
+        HostedZoneId:
+          Fn::GetAtt:
+          - CustomDomainName
+          - RegionalHostedZoneId
       Type: A
-
-
-
-
-  APIMapping: # Creates the mapping for Reporting V1
+  APIMapping:
     Type: AWS::ApiGatewayV2::ApiMapping
     DependsOn: API
-    Properties: 
-      ApiId: !Ref API
-      ApiMappingKey: "api"
-      DomainName: !Ref DomainName
-      Stage: !Ref API.Stage
-
-  API: # endpoint
+    Properties:
+      ApiId:
+        Ref: API
+      ApiMappingKey: api
+      DomainName:
+        Ref: DomainName
+      Stage:
+        Ref: API.Stage
+  API:
     Type: AWS::Serverless::Api
     Properties:
-      Description: !Sub "${DomainName} - API"
+      Description:
+        Fn::Sub: ${DomainName} - API
       StageName: Prod
       EndpointConfiguration:
         Type: REGIONAL
-        x-amazon-apigateway-importexport-version: "1.0"
-
-
+        x-amazon-apigateway-importexport-version: '1.0'
   APIFn:
-    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Type: AWS::Serverless::Function
     Properties:
       PackageType: Image
-      ImageUri: !Ref API_Repository
+      ImageUri: apifn:dotnet5.0-v1
       Events:
         API:
-          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Type: Api
           Properties:
-            RestApiId: !Ref API
+            RestApiId:
+              Ref: API
             Path: /{proxy+}
             Method: any
       Environment:
         Variables:
-          SSMPath: !Ref SSMPath
+          SSMPath:
+            Ref: SSMPath
       VpcConfig:
         SecurityGroupIds:
-            - !Ref SecurityGroup1
-            - !Ref SecurityGroup2
+        - Ref: SecurityGroup1
+        - Ref: SecurityGroup2
         SubnetIds:
-            - !Ref Subnet1
-            - !Ref Subnet2
+        - Ref: Subnet1
+        - Ref: Subnet2
     Metadata:
       DockerTag: dotnet5.0-v1
       DockerContext: ../Backend
       Dockerfile: Dockerfile
       DockerBuildArgs:
         SAM_BUILD_MODE: run
-
-
   StaticHostingApp:
     Type: AWS::Serverless::Application
     Properties:
-      Location: ./frontend.yaml
+      Location: StaticHostingApp\template.yaml
       Parameters:
-        DomainName: !Ref CustomDomainName   
-        S3StaticHostingURL: !Ref S3StaticHostingURL
+        DomainName:
+          Ref: CustomDomainName
+        S3StaticHostingURL:
+          Ref: S3StaticHostingURL
